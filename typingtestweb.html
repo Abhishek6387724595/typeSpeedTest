@@ -70,6 +70,55 @@
 
     const msg = document.getElementById('msg');
     const typeWords = document.getElementById('mywords');
+    const btn = document.getElementById('btn');
+
+    let startTime,endTime;
+
+
+   const playGame = () =>{
+        let randomNumber = Math.floor(Math.random()*setOfWords.length);
+        msg.innerText = setOfWords[randomNumber];
+        let date = new Date();
+        startTime=date.getTime();
+        btn.innerText = "Done";
+    }
+
+    const endPlay = () =>{
+        let date = new Date();
+        endTime = date.getTime();
+        let totalTime = ((endTime - startTime)/1000);//to convert millisecond to sec
+        console.log(totalTime);
+
+        let totalStr = typeWords.value;
+        let WordCount = wordCounter(totalStr);
+
+        let speed = Math.round(WordCount/totalTime)*60;
+
+        let finalMsg = "You typed total at "+speed+" words per minute";
+        msg.innerText=finalMsg;
+    }
+
+    const wordCounter = (str) =>{
+        let response = str.split(" ").length;
+        return response;
+    }
+
+    btn.addEventListener('click',function(){
+        if(this.innerText=='Start'){
+            typeWords.disabled=false;
+            playGame();
+        }else if(this.innerText=='Done'){
+            typeWords.disabled=true;
+            btn.innerText = "Start";
+            endPlay();
+        }
+    });
+
+
+
+
+
+
 </script>
 
 </body>
